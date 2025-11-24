@@ -1,36 +1,54 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
-// Hàm định dạng ngày giờ (cho mục đích demo)
-const formatTime = (date:any) => {
+// 1. Định nghĩa kiểu dữ liệu rõ ràng thay vì dùng 'any'
+const formatTime = (date: Date) => {
   const hours = String(date.getHours()).padStart(2, '0');
   const minutes = String(date.getMinutes()).padStart(2, '0');
   const seconds = String(date.getSeconds()).padStart(2, '0');
   return { time: `${hours}:${minutes}`, seconds: seconds };
 };
 
-const formatDate = (date:any) => {
-  const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+const formatDate = (date: Date) => {
+  // 2. Khai báo kiểu cho options để đúng chuẩn TypeScript
+  const options: Intl.DateTimeFormatOptions = { 
+    weekday: 'long', 
+    year: 'numeric', 
+    month: 'long', 
+    day: 'numeric' 
+  };
+  
   const formattedDate = date.toLocaleDateString('vi-VN', options);
-  // Cắt bỏ phần thứ/ngày trong chuỗi để hiển thị riêng
-  const dayOfWeek = formattedDate.split(',')[0]; 
-  const fullDate = formattedDate.substring(formattedDate.indexOf(',') + 1).trim();
-  return { dayOfWeek: dayOfWeek, fullDate: fullDate };
+  
+  // Xử lý an toàn hơn trong trường hợp chuỗi không có dấu phẩy
+  const splitIndex = formattedDate.indexOf(',');
+  let dayOfWeek = '';
+  let fullDate = formattedDate;
+
+  if (splitIndex !== -1) {
+    dayOfWeek = formattedDate.substring(0, splitIndex);
+    fullDate = formattedDate.substring(splitIndex + 1).trim();
+  } else {
+    // Fallback nếu trình duyệt trả về format khác
+    dayOfWeek = formattedDate.split(' ')[0]; 
+  }
+
+  return { dayOfWeek, fullDate };
 };
 
 const ClockDisplay = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
 
-  // Thiết lập interval để cập nhật thời gian
   useEffect(() => {
-    const timerID = setInterval(() => tick(), 1000);
+    // 3. Định nghĩa logic tick ngay tại nơi sử dụng để tránh lỗi hoisting (khai báo sau khi dùng)
+    const tick = () => {
+      setCurrentDate(new Date());
+    };
+
+    const timerID = setInterval(tick, 1000);
 
     // Dọn dẹp khi component unmount
     return () => clearInterval(timerID);
   }, []);
-
-  const tick = () => {
-    setCurrentDate(new Date());
-  };
 
   const timeData = formatTime(currentDate);
   const dateData = formatDate(currentDate);
