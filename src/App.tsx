@@ -1,4 +1,4 @@
-import React from 'react';
+
 import ClockDisplay from './ClockDisplay';
 import ReminderManager from './ReminderManager';
 // Bạn vẫn cần file style.css và Font Awesome CSS được nhúng trong index.html hoặc tương đương
