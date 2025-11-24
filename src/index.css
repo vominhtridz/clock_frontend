@@ -1,0 +1,201 @@
+/* Thiết lập cơ bản và font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+:root {
+    --bg-color: #1a1a2e; /* Nền tối */
+    --primary-color: #007bff; /* Màu chủ đạo xanh dương */
+    --secondary-color: #e94560; /* Màu nổi bật (ví dụ: nút Delete) */
+    --text-light: #ffffff;
+    --text-muted: #999999;
+    --card-bg: #272740;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-light);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.container {
+    width: 100%;
+    max-width: 900px;
+    display: grid;
+    /* Sử dụng Grid để chia 2 cột: Đồng hồ và Quản lý */
+    grid-template-columns: 1fr 1fr; 
+    gap: 30px;
+    background: #20203a;
+    border-radius: 15px;
+    padding: 40px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+/* ------------------- Đồng hồ Display ------------------- */
+
+.clock-display-area {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 30px;
+    background: linear-gradient(135deg, #272740, #1a1a2e);
+    border-radius: 12px;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.4);
+}
+
+.date-time-box {
+    text-transform: uppercase;
+    font-size: 1.1rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    color: var(--primary-color);
+    margin-bottom: 20px;
+}
+
+.time-box {
+    display: flex;
+    align-items: baseline;
+}
+
+.hour-min {
+    font-size: 5.5rem; /* Kích thước lớn */
+    font-weight: 700;
+    color: var(--text-light);
+    /* Hiệu ứng neon nhẹ */
+    text-shadow: 0 0 5px var(--primary-color), 0 0 10px var(--primary-color); 
+}
+
+.seconds {
+    font-size: 2.5rem;
+    font-weight: 300;
+    color: var(--text-muted);
+    margin-left: 10px;
+}
+
+
+/* ------------------- Khu vực Quản lý (CRUD) ------------------- */
+
+.management-area {
+    padding: 20px;
+}
+
+.management-area h2 {
+    color: var(--primary-color);
+    margin-bottom: 20px;
+    border-bottom: 2px solid var(--primary-color);
+    padding-bottom: 10px;
+}
+
+/* Nút Thao tác */
+.crud-controls {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.crud-button {
+    flex-grow: 1;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.crud-button i {
+    margin-right: 8px;
+}
+
+.add-btn {
+    background-color: var(--primary-color);
+    color: var(--text-light);
+}
+.add-btn:hover { background-color: #0056b3; }
+
+.edit-btn {
+    background-color: #ffc107;
+    color: #333;
+}
+.edit-btn:hover { background-color: #e0a800; }
+
+.delete-btn {
+    background-color: var(--secondary-color);
+    color: var(--text-light);
+}
+.delete-btn:hover { background-color: #c4324a; }
+
+/* Danh sách Item */
+.item-list-container {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 15px;
+    background-color: var(--card-bg);
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    border-left: 5px solid var(--primary-color); /* Đường viền nổi bật */
+}
+
+.item-text {
+    flex-grow: 1;
+    font-size: 1rem;
+}
+
+.item.completed {
+    background-color: #33334d;
+    border-left: 5px solid #28a745;
+    opacity: 0.7;
+}
+
+.item.completed .item-text {
+    text-decoration: line-through;
+    color: var(--text-muted);
+}
+
+.check-icon {
+    color: #28a745;
+    font-size: 1.2rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .container {
+        grid-template-columns: 1fr; /* Chuyển sang 1 cột trên màn hình nhỏ */
+        gap: 20px;
+        padding: 20px;
+    }
+    
+    .hour-min {
+        font-size: 4rem;
+    }
+    
+    .seconds {
+        font-size: 2rem;
+    }
+    
+    .crud-controls {
+        flex-direction: column;
+    }
+}
