@@ -30,7 +30,7 @@ jobs:
           cache: 'npm'
 
       - name: Install dependencies
-        run: npm ci # Dùng 'npm ci' thay vì 'npm install' để cài chính xác phiên bản trong package-lock.json
+        run: npm install # Dùng 'npm ci' thay vì 'npm install' để cài chính xác phiên bản trong package-lock.json
 
       - name: Lint Code (Optional)
         # Chạy eslint để kiểm tra lỗi cú pháp trước. Nếu lỗi thì dừng luôn, không build nữa.
